@@ -1,6 +1,8 @@
 package com.example.user.picshare;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -28,10 +30,18 @@ public class MainActivity extends AppCompatActivity implements View.OnKeyListene
     Button sgup;
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
+    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        sharedPreferences = getApplicationContext().getSharedPreferences("com.example.user.picshare", Context.MODE_PRIVATE);
+        String storedname = (String)sharedPreferences.getString("name", "unknown");
+        if(storedname != "unknown"){
+            Intent intent = new Intent(getApplicationContext(), showUsers.class);
+            intent.putExtra("name", storedname);
+            startActivity(intent);
+        }
         RelativeLayout backgroundRelativeLayout = (RelativeLayout)findViewById(R.id.backgroundRelativeLayout);
         backgroundRelativeLayout.setOnClickListener(this);
         editText1 = (EditText)findViewById(R.id.email);
@@ -78,6 +88,8 @@ public class MainActivity extends AppCompatActivity implements View.OnKeyListene
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             putinDatabase(name, email);
+                            sharedPreferences.edit().putString("name", name).apply();
+                            sharedPreferences.edit().putString("email",email).apply();
                             Toast.makeText(getApplicationContext(), "registration succesfull", Toast.LENGTH_SHORT).show();
 
                         }else{
@@ -88,14 +100,17 @@ public class MainActivity extends AppCompatActivity implements View.OnKeyListene
     }
 
     public void signin(View view) {
-        String email = editText1.getText().toString();
+        final String email = editText1.getText().toString();
         String pass = editText2.getText().toString();
         final String name = editText3.getText().toString();
+
         mAuth.signInWithEmailAndPassword(email, pass)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
+                            sharedPreferences.edit().putString("name", name).apply();
+                            sharedPreferences.edit().putString("email",email).apply();
                             Toast.makeText(getApplicationContext(), "signin succesfull", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(), showUsers.class);
                             intent.putExtra("name", name);
