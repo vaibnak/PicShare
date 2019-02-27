@@ -1,6 +1,7 @@
 # PicShare
 A photo Sharing app for family/friends
 
+# Workflow
 This App has been created to enable photsharing between Family and Friends<br>
 The features provided by this app are <br>
 1. Users need to first signUp with their name, email Id and password.
@@ -16,6 +17,7 @@ The features provided by this app are <br>
 <p align="center">
 <img src="https://github.com/vaibnak/PicShare/blob/master/Screenshot_20190225-232245.jpg" width="200" height="300" />
 <img src="https://github.com/vaibnak/PicShare/blob/master/Screenshot_20190225-232257.jpg" width="200" height="300" />
+<img src="https://github.com/vaibnak/PicShare/blob/master/Screenshot_20190225-232304.jpg" width="200" height="300" />
 </p>
 4. From the users list they can select the member whose shared photo they want to see
 5. All the photos shared by that specific person is displayed
@@ -27,3 +29,6 @@ The features provided by this app are <br>
 <img src="https://github.com/vaibnak/PicShare/blob/master/Screenshot_20190225-232241.jpg" width="200" height="300" />
 </p>
 7. Firebase database has been used to handle the backend of this app, where we have the database of the users and storage of the images shared by all the users.
+
+# Technology Used
+Android Stduio, Firebase services, xml, java
